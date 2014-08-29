@@ -12,13 +12,11 @@ window.WeixinAPI = (function() {
                 wxBridgeReady(self, callback);
             };
             wxData = data || {};
-            if (typeof window.WeixinJSBridge === 'undefined'){
-                if (document.addEventListener) {
-                    document.addEventListener('WeixinJSBridgeReady', _wxBridgeReady, false);
-                } else if (document.attachEvent) {
-                    document.attachEvent('WeixinJSBridgeReady', _wxBridgeReady);
-                    document.attachEvent('onWeixinJSBridgeReady', _wxBridgeReady);
-                }
+            if ('addEventListener' in document) {
+                document.addEventListener('WeixinJSBridgeReady', _wxBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', _wxBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', _wxBridgeReady);
             }
         } else if (callback) {
             callback.call(null, self);
@@ -89,25 +87,25 @@ window.WeixinAPI = (function() {
         switch (resp.err_msg) {
             // send_app_msg:cancel 用户取消
             case 'send_app_msg:cancel':
-                fireEvent(getEventName(action, 'cancel'));
-                fireEvent('cancel');
+                fireEvent(getEventName(action, 'cancel'), [resp.err_msg]);
+                fireEvent('cancel', [resp.err_msg]);
                 break;
             // send_app_msg:confirm 发送成功
             //case 'send_app_msg:confirm':
             case 'send_app_msg:ok':
-                fireEvent(getEventName(action, 'ok'));
-                fireEvent('ok');
+                fireEvent(getEventName(action, 'ok'), [resp.err_msg]);
+                fireEvent('ok', [resp.err_msg]);
                 break;
             // send_app_msg:fail　发送失败
             //case 'send_app_msg:fail':
             default:
-                fireEvent(getEventName(action, 'fail'));
-                fireEvent('fail');
+                fireEvent(getEventName(action, 'fail'), [resp.err_msg]);
+                fireEvent('fail', [resp.err_msg]);
                 break;
         }
         // 无论成功失败都会执行的回调
-        fireEvent(getEventName(action, 'complete'));
-        fireEvent('complete');
+        fireEvent(getEventName(action, 'complete'), [resp.err_msg]);
+        fireEvent('complete', [resp.err_msg]);
     }
 
     function shareReady(action) {
@@ -159,11 +157,11 @@ window.WeixinAPI = (function() {
         }
     }
 
-    function fireEvent(eventName) {
+    function fireEvent(eventName, args) {
         if (events[eventName]) {
             for (var i = 0, len = events[eventName].length; i < len; i++) {
                 var eventCb = events[eventName][i];
-                if (eventCb && eventCb.call(null) === false) {
+                if (eventCb && eventCb.apply(null, args || []) === false) {
                     return;
                 }
             }
