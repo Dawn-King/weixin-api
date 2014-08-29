@@ -33,7 +33,7 @@ WeixinAPI.ready(wxData);
 你可以在`ready`动作之后的任何时候更改`wxData`对象，比如：
 
 ```javascript
-wxData.link = 'http://lavaflow.75team.com';
+wxData.link = 'http://www.75team.com';
 ```
 
 
