@@ -20,6 +20,8 @@ window.WeixinAPI = (function() {
                     document.attachEvent('onWeixinJSBridgeReady', _wxBridgeReady);
                 }
             }
+        } else if (callback) {
+            callback.call(null, self);
         }
         return self;
     }
