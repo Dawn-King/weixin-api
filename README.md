@@ -40,11 +40,11 @@ wxData.link = 'http://www.75team.com';
 ### 2、监听分享事件
 
 支持的事件名称：
- - **ready** 准备分享
- - **cancel** 取消分享
- - **ok** 分享成功
- - **fail** 分享失败
- - **complete** 分享结束
+ - `ready` 准备分享
+ - `cancel` 取消分享
+ - `ok` 分享成功
+ - `fail` 分享失败
+ - `complete` 分享结束
 
 默认事件监听应用到全局，不伦哪个分享渠道都会执行毁掉。调用方法：
 
@@ -54,9 +54,9 @@ WeixinAPI.on('fail', function() { alert('share failure!'); });
 ```
 
 除此之外，你还可监听特定动作的事件，支持：
- - **timeline** 朋友圈
- - **appmessage** 微信朋友
- - **weibo** 腾讯微博
+ - `timeline` 朋友圈
+ - `appmessage` 微信朋友
+ - `weibo` 腾讯微博
 
 调用方法：
 
@@ -101,10 +101,10 @@ WeixinAPI.imagePreview(current, urls);
 ### 5、获取当前的网络状态
 
 Network 类型取值：
- - **network_type:wifi** wifi网络
- - **network_type:edge** 非wifi，包含3G/2G
- - **network_type:fail** 网络断开连接
- - **network_type:wwan** 2g或者3g
+ - `network_type:wifi` wifi网络
+ - `network_type:edge` 非wifi，包含3G/2G
+ - `network_type:fail` 网络断开连接
+ - `network_type:wwan` 2g或者3g
 
 调用方法：
 
